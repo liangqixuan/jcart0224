@@ -1,8 +1,10 @@
 package io.lqx.jcartadministrationback.controller;
 
-import io.lqx.jcartadministrationback.dto.in.AdministratorLoginInDTO;
-import io.lqx.jcartadministrationback.dto.in.AdministratorUpdateProfileInDTO;
+import io.lqx.jcartadministrationback.dto.in.*;
 import io.lqx.jcartadministrationback.dto.out.AdministratorGetProfileOutDTO;
+import io.lqx.jcartadministrationback.dto.out.AdministratorListOutDTO;
+import io.lqx.jcartadministrationback.dto.out.AdministratorShowOutDTO;
+import io.lqx.jcartadministrationback.dto.out.PageOutDTO;
 import org.springframework.web.bind.annotation.*;
 
 /* *
@@ -30,7 +32,7 @@ public class AdministratorController {
      * @return
      */
     @GetMapping("/getProfile")
-    public AdministratorGetProfileOutDTO getProfile(Integer administratorId){
+    public AdministratorGetProfileOutDTO getProfile(@RequestParam(required = false) Integer administratorId){
         return null;
     }
 
@@ -39,6 +41,62 @@ public class AdministratorController {
      */
     @PostMapping("/updateProfile")
     public void updateProfile(@RequestBody AdministratorUpdateProfileInDTO administratorUpdateProfileInDTO){
+
+    }
+
+    /* *
+     * 验证密码
+     * @param email
+     * @return
+     */
+    @GetMapping("/getPwdRestCode")
+    public String getPwdRestCode(@RequestParam String email){
+        return null;
+    }
+
+    /* *
+     * 重置密码
+     */
+    @PostMapping("/restPws")
+    public void restPws(@RequestBody AdministratorRestPwdInDTO administratorRestPwdInDTO){
+
+    }
+
+    /* *
+     * 列表查询
+     * @param page
+     * @return
+     */
+    @GetMapping("/getList")
+    public PageOutDTO<AdministratorListOutDTO> getList(@RequestParam Integer pageNum){
+        return null;
+    }
+
+    /* *
+     * 信息展示
+     * @param administratorId
+     * @return
+     */
+    @GetMapping("/getById")
+    public AdministratorShowOutDTO getById(@RequestParam Integer administratorId){
+        return null;
+    }
+
+    /* *
+     * 创建信息
+     * @param administratorCreateInDTO
+     * @return
+     */
+    @PostMapping("/create")
+    public Integer create(@RequestBody AdministratorCreateInDTO administratorCreateInDTO){
+        return 0;
+    }
+
+    /* *
+     * 更新信息
+     */
+    @PostMapping("/update")
+    public void update(@RequestBody AdministratorUpdateInDTO administratorUpdateInDTO){
 
     }
 }

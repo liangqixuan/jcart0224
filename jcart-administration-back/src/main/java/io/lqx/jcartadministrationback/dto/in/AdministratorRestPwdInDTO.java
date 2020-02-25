@@ -4,15 +4,13 @@ import lombok.Data;
 
 /* *
  * @Author: LiangQiXuan
- * @Date: 2020/2/24 17:34
+ * @Date: 2020/2/25 13:40
  * 为API生，为框架死，为debug奋斗一辈子，
  * 吃符号亏，上大小写的当，最后死在需求上。
  */
 @Data
-public class AdministratorUpdateProfileInDTO {
-    private String realName;
+public class AdministratorRestPwdInDTO {
     private String email;
-    private String avatarUrl;
-    private String password;
-    private Byte status;
+    private String restCode;
+    private String newPwd;
 }

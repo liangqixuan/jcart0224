@@ -1,18 +1,18 @@
-package io.lqx.jcartadministrationback.dto.in;
+package io.lqx.jcartadministrationback.dto.out;
 
 import lombok.Data;
 
 /* *
  * @Author: LiangQiXuan
- * @Date: 2020/2/24 17:34
+ * @Date: 2020/2/25 13:50
  * 为API生，为框架死，为debug奋斗一辈子，
  * 吃符号亏，上大小写的当，最后死在需求上。
  */
 @Data
-public class AdministratorUpdateProfileInDTO {
-    private String realName;
+public class AdministratorShowOutDTO {
+    private Integer administratorId;
+    private String username;
     private String email;
     private String avatarUrl;
-    private String password;
     private Byte status;
 }
