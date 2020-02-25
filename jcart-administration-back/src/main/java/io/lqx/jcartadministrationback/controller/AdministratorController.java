@@ -7,6 +7,8 @@ import io.lqx.jcartadministrationback.dto.out.AdministratorShowOutDTO;
 import io.lqx.jcartadministrationback.dto.out.PageOutDTO;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /* *
  * @Author: LiangQiXuan
  * @Date: 2020/2/24 17:16
@@ -97,6 +99,24 @@ public class AdministratorController {
      */
     @PostMapping("/update")
     public void update(@RequestBody AdministratorUpdateInDTO administratorUpdateInDTO){
+
+    }
+
+    /* *
+     * 单挑信息删除
+     * @param administratorId
+     */
+    @PostMapping("/delete")
+    public void delete(@RequestBody Integer administratorId){
+
+    }
+
+    /* *
+     * 批量删除信息
+     * @param administratorIds
+     */
+    @PostMapping("/batchDelete")
+    public void batchDelete(@RequestBody List<Integer> administratorIds){
 
     }
 }
