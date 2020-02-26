@@ -3,6 +3,8 @@ package io.lqx.jcartadministrationback.dao;
 import io.lqx.jcartadministrationback.po.Product;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProductMapper {
     int deleteByPrimaryKey(Integer productId);
@@ -16,4 +18,6 @@ public interface ProductMapper {
     int updateByPrimaryKeySelective(Product record);
 
     int updateByPrimaryKey(Product record);
+
+    void batchDelete(List<Integer> productIds);
 }

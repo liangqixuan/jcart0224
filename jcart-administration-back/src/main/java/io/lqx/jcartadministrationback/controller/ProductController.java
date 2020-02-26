@@ -10,6 +10,8 @@ import io.lqx.jcartadministrationback.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /* *
  * @Author: LiangQiXuan
  * @Date: 2020/2/25 14:02
@@ -52,8 +54,8 @@ public class ProductController {
      * @return
      */
     @PostMapping("/update")
-    public String update(@RequestBody ProductUpdateInDTO productUpdateInDTO){
-        return null;
+    public void update(@RequestBody ProductUpdateInDTO productUpdateInDTO){
+        productService.update(productUpdateInDTO);
     }
 
     /* *
@@ -64,5 +66,23 @@ public class ProductController {
     @GetMapping("/getById")
     public ProductShowOutDTO getById(@RequestParam Integer productId){
         return null;
+    }
+
+    /* *
+     * 一条数据删除
+     * @param productId
+     */
+    @PostMapping("/delete")
+    public void delete(@RequestBody Integer productId){
+        productService.delete(productId);
+    }
+
+    /* *
+     * 多条数据删除
+     * @param productIds
+     */
+    @PostMapping("/batchDelete")
+    public void batchDelete(@RequestBody List<Integer> productIds){
+        productService.batchDelete(productIds);
     }
 }

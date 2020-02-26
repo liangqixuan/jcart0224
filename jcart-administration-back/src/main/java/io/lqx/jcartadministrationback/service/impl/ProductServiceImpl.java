@@ -106,13 +106,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public void delete(Integer productId) {
-
+        // 删除商品表数据
+        productMapper.deleteByPrimaryKey(productId);
+        // 删除商品附表数据
+        productDetailMapper.deleteByPrimaryKey(productId);
     }
 
     @Override
+    @Transactional
     public void batchDelete(List<Integer> productIds) {
-
+        productMapper.batchDelete(productIds);
+        productDetailMapper.batchDelete(productIds);
     }
 
     @Override
