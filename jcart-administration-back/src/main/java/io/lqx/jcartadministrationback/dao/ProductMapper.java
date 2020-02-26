@@ -1,7 +1,9 @@
 package io.lqx.jcartadministrationback.dao;
 
 import io.lqx.jcartadministrationback.po.Product;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ProductMapper {
     int deleteByPrimaryKey(Integer productId);
 

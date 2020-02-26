@@ -6,6 +6,8 @@ import io.lqx.jcartadministrationback.dto.in.ProductUpdateInDTO;
 import io.lqx.jcartadministrationback.dto.out.PageOutDTO;
 import io.lqx.jcartadministrationback.dto.out.ProductListOutDTO;
 import io.lqx.jcartadministrationback.dto.out.ProductShowOutDTO;
+import io.lqx.jcartadministrationback.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /* *
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/product")
 public class ProductController {
+
+    @Autowired
+    private ProductService productService;
 
     /* *
      * 商品搜索
@@ -36,8 +41,9 @@ public class ProductController {
      * @return
      */
     @PostMapping("/create")
-    public String create(@RequestBody ProductCreateInDTO productCreateInDTO){
-        return null;
+    public Integer create(@RequestBody ProductCreateInDTO productCreateInDTO){
+        Integer productId = productService.create(productCreateInDTO);
+        return productId;
     }
 
     /* *
