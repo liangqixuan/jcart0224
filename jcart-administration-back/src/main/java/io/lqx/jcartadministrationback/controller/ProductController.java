@@ -1,5 +1,6 @@
 package io.lqx.jcartadministrationback.controller;
 
+import com.github.pagehelper.Page;
 import io.lqx.jcartadministrationback.dto.in.ProductCreateInDTO;
 import io.lqx.jcartadministrationback.dto.in.ProductSearchInDTO;
 import io.lqx.jcartadministrationback.dto.in.ProductUpdateInDTO;
@@ -32,9 +33,17 @@ public class ProductController {
      * @return
      */
     @GetMapping("/search")
-    public PageOutDTO<ProductListOutDTO> search(@RequestBody ProductSearchInDTO productSearchInDTO,
-                                                @RequestParam Integer pageNum){
-        return null;
+    public PageOutDTO<ProductListOutDTO> search(ProductSearchInDTO productSearchInDTO,
+                                                @RequestParam(required = false,defaultValue = "1") Integer pageNum){
+        Page<ProductListOutDTO> page = productService.search(pageNum);
+
+        // 分页存取数据
+        PageOutDTO<ProductListOutDTO> pageOutDTO = new PageOutDTO<>();
+        pageOutDTO.setTotal(page.getTotal());
+        pageOutDTO.setPageNum(page.getPageNum());
+        pageOutDTO.setPageSize(page.getPageSize());
+        pageOutDTO.setList(page);
+        return pageOutDTO;
     }
 
     /* *
@@ -65,7 +74,8 @@ public class ProductController {
      */
     @GetMapping("/getById")
     public ProductShowOutDTO getById(@RequestParam Integer productId){
-        return null;
+        ProductShowOutDTO productShowOutDTO = productService.getById(productId);
+        return productShowOutDTO;
     }
 
     /* *

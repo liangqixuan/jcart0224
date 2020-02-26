@@ -1,6 +1,7 @@
 package io.lqx.jcartadministrationback.dao;
 
 import io.lqx.jcartadministrationback.po.ProductDetail;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,5 +22,5 @@ public interface ProductDetailMapper {
 
     int updateByPrimaryKey(ProductDetail record);
 
-    void batchDelete(List<Integer> productIds);
+    int batchDelete(@Param("productIds") List<Integer> productIds);
 }

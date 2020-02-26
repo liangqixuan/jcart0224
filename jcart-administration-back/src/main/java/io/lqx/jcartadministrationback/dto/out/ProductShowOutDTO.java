@@ -1,5 +1,7 @@
 package io.lqx.jcartadministrationback.dto.out;
 
+import lombok.Data;
+
 import java.util.List;
 
 /* *
@@ -8,6 +10,7 @@ import java.util.List;
  * 为API生，为框架死，为debug奋斗一辈子，
  * 吃符号亏，上大小写的当，最后死在需求上。
  */
+@Data
 public class ProductShowOutDTO {
     private Integer productId;
     private String productCode;

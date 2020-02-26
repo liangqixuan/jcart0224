@@ -2,6 +2,7 @@ package io.lqx.jcartadministrationback.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import io.lqx.jcartadministrationback.dao.ProductDetailMapper;
 import io.lqx.jcartadministrationback.dao.ProductMapper;
 import io.lqx.jcartadministrationback.dto.in.ProductCreateInDTO;
@@ -117,17 +118,47 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public void batchDelete(List<Integer> productIds) {
+        // 多条商品数据删除
         productMapper.batchDelete(productIds);
+        // 多条商品附表数据删除
         productDetailMapper.batchDelete(productIds);
     }
 
     @Override
     public Page<ProductListOutDTO> search(Integer pageNum) {
-        return null;
+        // 分页插件设置查询条数
+        PageHelper.startPage(pageNum,10);
+        Page<ProductListOutDTO> page = productMapper.search();
+        return page;
     }
 
     @Override
     public ProductShowOutDTO getById(Integer productId) {
-        return null;
+        // 根据商品Id查询单条商品数据信息
+        Product product = productMapper.selectByPrimaryKey(productId);
+        // 根据商品Id查询单条商品附表数据信息
+        ProductDetail productDetail = productDetailMapper.selectByPrimaryKey(productId);
+
+        // 创建显示信息对象
+        ProductShowOutDTO productShowOutDTO = new ProductShowOutDTO();
+        // 查询的数据进行赋值
+        productShowOutDTO.setProductId(productId);
+        productShowOutDTO.setProductCode(product.getProductCode());
+        productShowOutDTO.setProductName(product.getProductName());
+        productShowOutDTO.setPrice(product.getPrice());
+        productShowOutDTO.setDiscount(product.getDiscount());
+        productShowOutDTO.setStatus(product.getStatus());
+        productShowOutDTO.setMainPicUrl(product.getMainPicUrl());
+        productShowOutDTO.setRewordPoints(product.getRewordPoints());
+        productShowOutDTO.setSortOrder(product.getSortOrder());
+        productShowOutDTO.setStockQuantity(product.getStockQuantity());
+
+        productShowOutDTO.setDescription(productDetail.getDescription());
+        String otherPicUrlsJson = productDetail.getOtherPicUrls();
+        // 其他图片转换为数组格式
+        List<String> otherPicUrls = JSON.parseArray(otherPicUrlsJson, String.class);
+        productShowOutDTO.setOtherPicUrls(otherPicUrls);
+
+        return productShowOutDTO;
     }
 }
