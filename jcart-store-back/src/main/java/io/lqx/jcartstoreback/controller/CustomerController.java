@@ -2,6 +2,9 @@ package io.lqx.jcartstoreback.controller;
 
 import io.lqx.jcartstoreback.dto.in.*;
 import io.lqx.jcartstoreback.dto.out.CustomerGetProfileOutDTO;
+import io.lqx.jcartstoreback.po.Customer;
+import io.lqx.jcartstoreback.util.JWTUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /* *
@@ -12,7 +15,14 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/customer")
+@CrossOrigin
 public class CustomerController {
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private JWTUtil jwtUtil;
 
     /* *
      * 前台商店端用户注册
@@ -21,6 +31,7 @@ public class CustomerController {
      */
     @PostMapping("/register")
     public Integer register(@RequestBody CustomerRegisterInDTO customerRegisterInDTO){
+        Customer customer = customerService.getByUsername(customerLoginInDTO.getUsername());
         return null;
     }
 
