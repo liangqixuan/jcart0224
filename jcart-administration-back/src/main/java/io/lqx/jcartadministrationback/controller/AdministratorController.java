@@ -52,20 +52,41 @@ public class AdministratorController {
     }
 
     /* *
-     * 获取用户登录里面的token值
+     * 获取管理员登录里面的数据,根据token获取
      * @param administratorId
      * @return
      */
     @GetMapping("/getProfile")
-    public AdministratorGetProfileOutDTO getProfile(@RequestParam(required = false) Integer administratorId){
-        return null;
+    public AdministratorGetProfileOutDTO getProfile(@RequestAttribute Integer administratorId){
+        Administrator administrator = administratorService.getById(administratorId);
+
+        AdministratorGetProfileOutDTO administrator1 = new AdministratorGetProfileOutDTO();
+        administrator1.setAdminstratorId(administrator.getAdministratorId());
+        administrator1.setUsername(administrator.getUsername());
+        administrator1.setRealName(administrator.getRealName());
+        administrator1.setEmail(administrator.getEmail());
+        administrator1.setAvatarUrl(administrator.getAvatarUrl());
+        administrator1.setCreateTimestamp(administrator.getCreateTime().getTime());
+        return administrator1;
     }
 
     /* *
      * 用户更新
      */
     @PostMapping("/updateProfile")
-    public void updateProfile(@RequestBody AdministratorUpdateProfileInDTO administratorUpdateProfileInDTO){
+    public void updateProfile(@RequestBody AdministratorUpdateProfileInDTO administratorUpdateProfileInDTO,
+                              @RequestAttribute Integer administratorId){
+
+    }
+
+    /* *
+     * 改变密码
+     * @param administratorChangePwdInDTO
+     * @param administratorId
+     */
+    @PostMapping("/changePed")
+    public void changePwd(@RequestBody AdministratorChangePwdInDTO administratorChangePwdInDTO,
+                          @RequestAttribute Integer administratorId){
 
     }
 

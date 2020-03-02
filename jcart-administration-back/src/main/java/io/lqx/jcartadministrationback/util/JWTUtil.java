@@ -1,10 +1,12 @@
 package io.lqx.jcartadministrationback.util;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import io.lqx.jcartadministrationback.dto.out.AdministratorLoginOutDTO;
 import io.lqx.jcartadministrationback.po.Administrator;
+import io.lqx.jcartadministrationback.vo.AdministratorLoginVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,7 +58,8 @@ public class JWTUtil {
         return administratorLoginOutDTO;
     }
 
-    /*public AdministratorLoginVO verifyToken(String token) {
+    // jwt的验证
+    public AdministratorLoginVO verifyToken(String token) {
         JWTVerifier verifier = JWT.require(algorithm)
                 .withIssuer(issuer)
                 .build();
@@ -67,5 +70,5 @@ public class JWTUtil {
         administratorLoginVO.setAdministratorId(jwt.getClaim("administratorId").asInt());
         administratorLoginVO.setUsername(jwt.getSubject());
         return administratorLoginVO;
-    }*/
+    }
 }
