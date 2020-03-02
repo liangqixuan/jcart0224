@@ -1,4 +1,4 @@
-package io.lqx.jcartstoreback.service.impl;
+package io.lqx.jcartstoreback.service;
 
 import io.lqx.jcartstoreback.po.Address;
 

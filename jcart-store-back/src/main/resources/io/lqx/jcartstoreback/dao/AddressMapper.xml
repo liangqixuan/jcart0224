@@ -30,7 +30,7 @@
       #{receiverMobile,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="io.lqx.jcartstoreback.po.Address">
+  <insert id="insertSelective" parameterType="io.lqx.jcartstoreback.po.Address" useGeneratedKeys="true" keyProperty="addressId">
     insert into jcart_address
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="addressId != null">

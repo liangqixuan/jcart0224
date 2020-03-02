@@ -1,7 +1,10 @@
 package io.lqx.jcartstoreback.dao;
 
 import io.lqx.jcartstoreback.po.Customer;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface CustomerMapper {
     int deleteByPrimaryKey(Integer customerId);
 
@@ -14,4 +17,6 @@ public interface CustomerMapper {
     int updateByPrimaryKeySelective(Customer record);
 
     int updateByPrimaryKey(Customer record);
+
+    Customer selectByUsername(@Param("username") String username);
 }

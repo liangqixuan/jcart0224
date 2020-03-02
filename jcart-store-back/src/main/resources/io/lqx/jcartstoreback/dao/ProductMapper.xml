@@ -161,4 +161,12 @@
       sort_order = #{sortOrder,jdbcType=INTEGER}
     where product_id = #{productId,jdbcType=INTEGER}
   </update>
+
+  <!--  custom-->
+  <select id="search" resultMap="ProductListOutDTO">
+    select
+    <include refid="Base_Column_List" />
+    from jcart_product
+    where status = 1
+  </select>
 </mapper>
