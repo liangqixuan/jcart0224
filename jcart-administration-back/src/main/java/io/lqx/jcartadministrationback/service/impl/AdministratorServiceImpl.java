@@ -40,7 +40,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void update(Administrator administrator) {
-
+        administratorMapper.updateByPrimaryKeySelective(administrator);
     }
 
     @Override
