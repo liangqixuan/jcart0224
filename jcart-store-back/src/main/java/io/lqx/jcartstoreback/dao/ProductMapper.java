@@ -1,7 +1,11 @@
 package io.lqx.jcartstoreback.dao;
 
+import com.github.pagehelper.Page;
+import io.lqx.jcartstoreback.dto.out.ProductListOutDTO;
 import io.lqx.jcartstoreback.po.Product;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ProductMapper {
     int deleteByPrimaryKey(Integer productId);
 
@@ -14,4 +18,6 @@ public interface ProductMapper {
     int updateByPrimaryKeySelective(Product record);
 
     int updateByPrimaryKey(Product record);
+
+    Page<ProductListOutDTO> search();
 }

@@ -2,6 +2,8 @@ package io.lqx.jcartstoreback.dto.out;
 
 import lombok.Data;
 
+import java.util.List;
+
 /* *
  * @Author: LiangQiXuan
  * @Date: 2020/2/25 17:12
@@ -19,4 +21,5 @@ public class ProductShowOutDTO {
     private String mainPicUrl;
     private Integer rewordPoints;
     private String description;
+    private List<String> otherPicUrls;
 }

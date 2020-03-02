@@ -1,13 +1,13 @@
 package io.lqx.jcartstoreback.controller;
 
+import com.github.pagehelper.Page;
 import io.lqx.jcartstoreback.dto.in.ProductSearchInDTO;
 import io.lqx.jcartstoreback.dto.out.PageOutDTO;
 import io.lqx.jcartstoreback.dto.out.ProductListOutDTO;
 import io.lqx.jcartstoreback.dto.out.ProductShowOutDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import io.lqx.jcartstoreback.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /* *
  * @Author: LiangQiXuan
@@ -17,17 +17,39 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/product")
+@CrossOrigin
 public class ProductController {
 
+    @Autowired
+    private ProductService productService;
+
+    /* *
+     * 查询列表数据
+     * @param productSearchInDTO
+     * @param pageNum
+     * @return
+     */
     @GetMapping("/search")
     public PageOutDTO<ProductListOutDTO> search(ProductSearchInDTO productSearchInDTO,
-                                                @RequestParam Integer pageNum){
-        return null;
+                                                @RequestParam(required = false, defaultValue = "1") Integer pageNum){
+        Page<ProductListOutDTO> page = productService.search(pageNum);
+        PageOutDTO<ProductListOutDTO> pageOutDTO = new PageOutDTO<>();
+        pageOutDTO.setTotal(page.getTotal());
+        pageOutDTO.setPageSize(page.getPageSize());
+        pageOutDTO.setPageNum(page.getPageNum());
+        pageOutDTO.setList(page);
+        return pageOutDTO;
     }
 
+    /* *
+     * 根据id查询单条数据信息
+     * @param productId
+     * @return
+     */
     @GetMapping("/getById")
     public ProductShowOutDTO getById(@RequestParam Integer productId){
-        return null;
+        ProductShowOutDTO productShowOutDTO = productService.getById(productId);
+        return productShowOutDTO;
     }
 
 }

@@ -10,7 +10,6 @@ import lombok.Data;
  */
 @Data
 public class CustomerGetProfileOutDTO {
-    private Integer customerId;
     private String username;
     private String realName;
     private String mobile;

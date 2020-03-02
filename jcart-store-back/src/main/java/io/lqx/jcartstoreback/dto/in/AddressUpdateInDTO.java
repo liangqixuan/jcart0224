@@ -10,6 +10,7 @@ import lombok.Data;
  */
 @Data
 public class AddressUpdateInDTO {
+    private Integer addressId;
     private String receiverName;
     private String receiverMobile;
     private String content;
