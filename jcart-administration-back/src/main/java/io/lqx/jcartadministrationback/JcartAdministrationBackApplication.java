@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan("io.lqx.jcartadministrationback.dao")
 public class JcartAdministrationBackApplication {
 
+
     public static void main(String[] args) {
         SpringApplication.run(JcartAdministrationBackApplication.class, args);
     }

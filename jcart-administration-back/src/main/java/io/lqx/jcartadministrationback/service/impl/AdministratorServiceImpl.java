@@ -29,7 +29,8 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public Administrator getByUsername(String username) {
-        return null;
+        Administrator administrator = administratorMapper.selectByUsername(username);
+        return administrator;
     }
 
     @Override
