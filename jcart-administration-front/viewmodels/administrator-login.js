@@ -5,11 +5,11 @@ var app = new Vue({
         password: ''
     },
     methods:{
-        handleLoginClick(){
+        handleLoginClick() {
             console.log('login click');
             this.loginAdministrator();
         },
-        loginAdministrator(){
+        loginAdministrator() {
             axios.get('/administrator/login', {
                 params: {
                   username: this.username,
@@ -18,6 +18,9 @@ var app = new Vue({
               })
               .then(function (response) {
                 console.log(response);
+                var dto = response.data;
+                localStorage['jcartToken'] = dto.token;
+                localStorage['expireTimestamp'] = dto.expireTimestamp;
                 alert('登录成功')
               })
               .catch(function (error) {
