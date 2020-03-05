@@ -1,8 +1,11 @@
 package io.lqx.jcartadministrationback.dao;
 
+import com.github.pagehelper.Page;
 import io.lqx.jcartadministrationback.po.Administrator;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface AdministratorMapper {
@@ -20,4 +23,8 @@ public interface AdministratorMapper {
 
     //
     Administrator selectByUsername(@Param("username") String username);
+
+    void batchDelete(@Param("administratorIds") List<Integer> administratorIds);
+
+    Page<Administrator> selectList();
 }

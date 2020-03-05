@@ -14,6 +14,7 @@ import java.util.List;
 public class AdministratorListOutDTO<T> {
     private Integer administratorId;
     private String username;
+    private String realName;
     private Byte status;
     private Long createTimes;
 

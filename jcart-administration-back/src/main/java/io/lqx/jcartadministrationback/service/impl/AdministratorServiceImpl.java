@@ -1,6 +1,7 @@
 package io.lqx.jcartadministrationback.service.impl;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import io.lqx.jcartadministrationback.dao.AdministratorMapper;
 import io.lqx.jcartadministrationback.po.Administrator;
 import io.lqx.jcartadministrationback.service.AdministratorService;
@@ -35,7 +36,9 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public Integer create(Administrator administrator) {
-        return null;
+        administratorMapper.insertSelective(administrator);
+        Integer administratorId = administrator.getAdministratorId();
+        return administratorId;
     }
 
     @Override
@@ -45,16 +48,18 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void delete(Integer administratorId) {
-
+        administratorMapper.deleteByPrimaryKey(administratorId);
     }
 
     @Override
     public void batchDelete(List<Integer> administratorIds) {
-
+        administratorMapper.batchDelete(administratorIds);
     }
 
     @Override
     public Page<Administrator> getList(Integer pageNum) {
-        return null;
+        PageHelper.startPage(pageNum,10);
+        Page<Administrator> page = administratorMapper.selectList();
+        return page;
     }
 }
