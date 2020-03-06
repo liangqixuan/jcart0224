@@ -21,4 +21,5 @@ public class CustomerShowOutDTO {
     private Boolean newsSubscribed;
     private Integer rewordPoints;
     private Integer defaultAddressId;
+    private String defaultAddress;
 }

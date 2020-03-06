@@ -1,5 +1,6 @@
 package io.lqx.jcartadministrationback.dto.out;
 
+import io.lqx.jcartadministrationback.vo.OrderProductVO;
 import lombok.Data;
 
 import java.util.List;
@@ -13,7 +14,8 @@ import java.util.List;
 @Data
 public class OrderShowOutDTO {
     private Long orderId;
-    private  Integer customerId;
+    private Integer customerId;
+    private String customerName;
     private Byte status;
     private Double totalPrice;
     private Integer rewordPoints;
@@ -26,6 +28,6 @@ public class OrderShowOutDTO {
     private String invoiceAddress;
     private Double invoicePrice;
     private String coment;
-    private List<OrderProductShowOutDTO> orderProducts;
+    private List<OrderProductVO> orderProducts;
 
 }

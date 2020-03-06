@@ -4,6 +4,11 @@ import io.lqx.jcartadministrationback.dto.in.CustomerSearchInDTO;
 import io.lqx.jcartadministrationback.dto.out.CustomerListOutDTO;
 import io.lqx.jcartadministrationback.dto.out.CustomerShowOutDTO;
 import io.lqx.jcartadministrationback.dto.out.PageOutDTO;
+import io.lqx.jcartadministrationback.po.Address;
+import io.lqx.jcartadministrationback.po.Customer;
+import io.lqx.jcartadministrationback.service.AddressService;
+import io.lqx.jcartadministrationback.service.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /* *
@@ -14,7 +19,14 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/customer")
+@CrossOrigin
 public class CustomerController {
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private AddressService addressService;
 
     /* *
      * 客户查询信息
@@ -33,7 +45,28 @@ public class CustomerController {
      */
     @GetMapping("/getById")
     public CustomerShowOutDTO getById(@RequestParam Integer customerId){
-        return null;
+        Customer customer = customerService.getById(customerId);
+
+        CustomerShowOutDTO customerShowOutDTO = new CustomerShowOutDTO();
+        customerShowOutDTO.setCustomerId(customerId);
+        customerShowOutDTO.setUsername(customer.getUsername());
+        customerShowOutDTO.setRealName(customer.getRealName());
+        customerShowOutDTO.setMobile(customer.getMobile());
+        customerShowOutDTO.setEmail(customer.getEmail());
+        customerShowOutDTO.setAvatarUrl(customer.getAvatarUrl());
+        customerShowOutDTO.setStatus(customer.getStatus());
+        customerShowOutDTO.setRewordPoints(customer.getRewordPoints());
+        customerShowOutDTO.setNewsSubscribed(customer.getNewsSubscribed());
+        customerShowOutDTO.setCreateTimestamp(customer.getCreateTime().getTime());
+        customerShowOutDTO.setDefaultAddressId(customer.getDefaultAddressId());
+
+        // 获取用户地址信息
+        Address defaultAddress = addressService.getById(customer.getDefaultAddressId());
+        if (defaultAddress != null){
+            customerShowOutDTO.setDefaultAddress(defaultAddress.getContent());
+        }
+
+        return customerShowOutDTO;
     }
 
     /* *
