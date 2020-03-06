@@ -13,11 +13,9 @@ import java.util.List;
 @Data
 public class OrderCheckoutInDTO {
     private Short shipMethod;
-    private String shipAddress;
-    private Double shipPrice;
+    private Integer shipAddressId;
     private Short payMethod;
-    private String invoiceAddress;
-    private Double invoicePrice;
+    private Integer invoiceAddressId;
     private String comment;
     private List<OrderProductInDTO> orderProducts;
 }

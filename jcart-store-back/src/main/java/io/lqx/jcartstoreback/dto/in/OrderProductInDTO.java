@@ -11,10 +11,6 @@ import lombok.Data;
 @Data
 public class OrderProductInDTO {
     private Integer productId;
-    private String productCode;
-    private String productName;
     private Integer quantity;
-    private Double unitPrice;
-    private Integer unitRewordPoints;
 
 }

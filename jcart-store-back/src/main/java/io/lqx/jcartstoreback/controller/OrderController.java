@@ -14,19 +14,37 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/order")
+@CrossOrigin
 public class OrderController {
 
+    /* *
+     * 创建订单
+     * @param orderCheckoutInDTO
+     * @param customerId
+     * @return
+     */
     @PostMapping("/checkout")
-    public Integer checkout(@RequestBody OrderCheckoutInDTO orderCheckoutInDTO,
+    public Long checkout(@RequestBody OrderCheckoutInDTO orderCheckoutInDTO,
                             @RequestAttribute Integer customerId){
         return null;
     }
 
+    /* *
+     * 查看订单信息
+     * @param customerId
+     * @return
+     */
     @GetMapping("/getList")
-    public PageOutDTO<OrderListOutDTO> getList(@RequestAttribute Integer customerId){
+    public PageOutDTO<OrderListOutDTO> getList(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
+                                               @RequestAttribute Integer customerId){
         return null;
     }
 
+    /* *
+     * 展示订单信息
+     * @param orderId
+     * @return
+     */
     @GetMapping("/getById")
     public OrderShowOutDTO getById(@RequestParam Long orderId){
         return null;

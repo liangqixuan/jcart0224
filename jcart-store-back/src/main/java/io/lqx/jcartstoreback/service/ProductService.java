@@ -3,6 +3,7 @@ package io.lqx.jcartstoreback.service;
 import com.github.pagehelper.Page;
 import io.lqx.jcartstoreback.dto.out.ProductListOutDTO;
 import io.lqx.jcartstoreback.dto.out.ProductShowOutDTO;
+import io.lqx.jcartstoreback.po.Product;
 
 /* *
  * @Author: LiangQiXuan
@@ -12,7 +13,9 @@ import io.lqx.jcartstoreback.dto.out.ProductShowOutDTO;
  */
 public interface ProductService {
 
-    ProductShowOutDTO getById(Integer productId);
+    Product getById(Integer productId);
+
+    ProductShowOutDTO getShowById(Integer productId);
 
     Page<ProductListOutDTO> search(Integer pageNum);
 }
