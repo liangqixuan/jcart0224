@@ -1,5 +1,7 @@
 package io.lqx.jcartadministrationback.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import io.lqx.jcartadministrationback.dao.CustomerMapper;
 import io.lqx.jcartadministrationback.po.Customer;
 import io.lqx.jcartadministrationback.service.CustomerService;
@@ -22,5 +24,12 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer getById(Integer customerId) {
         Customer customer = customerMapper.selectByPrimaryKey(customerId);
         return customer;
+    }
+
+    @Override
+    public Page<Customer> search(Integer pageNum) {
+        PageHelper.startPage(pageNum, 10);
+        Page<Customer> page = customerMapper.search();
+        return page;
     }
 }
