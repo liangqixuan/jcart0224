@@ -82,6 +82,7 @@ public class OrderServiceImpl implements OrderService {
         order.setCreateTime(now);
         order.setUpdateTime(now);
 
+        // 添加订单信息
         orderMapper.insertSelective(order);
         Long orderId = order.getOrderId();
 
@@ -102,6 +103,7 @@ public class OrderServiceImpl implements OrderService {
 
         orderDetail.setOrderProducts(JSON.toJSONString(orderProductVOS));
 
+        // 添加订单附表信息
         orderDetailMapper.insertSelective(orderDetail);
 
         return orderId;
