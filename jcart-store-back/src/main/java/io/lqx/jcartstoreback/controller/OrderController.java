@@ -4,6 +4,8 @@ import io.lqx.jcartstoreback.dto.in.OrderCheckoutInDTO;
 import io.lqx.jcartstoreback.dto.out.OrderListOutDTO;
 import io.lqx.jcartstoreback.dto.out.OrderShowOutDTO;
 import io.lqx.jcartstoreback.dto.out.PageOutDTO;
+import io.lqx.jcartstoreback.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /* *
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class OrderController {
 
+    @Autowired
+    private OrderService orderService;
+
     /* *
      * 创建订单
      * @param orderCheckoutInDTO
@@ -26,7 +31,8 @@ public class OrderController {
     @PostMapping("/checkout")
     public Long checkout(@RequestBody OrderCheckoutInDTO orderCheckoutInDTO,
                             @RequestAttribute Integer customerId){
-        return null;
+        Long orderId = orderService.chekout(orderCheckoutInDTO, customerId);
+        return orderId;
     }
 
     /* *

@@ -3,6 +3,7 @@ package io.lqx.jcartstoreback.controller;
 import io.lqx.jcartstoreback.dto.in.AddressCreateInDTO;
 import io.lqx.jcartstoreback.dto.in.AddressUpdateInDTO;
 import io.lqx.jcartstoreback.dto.out.AddressListOutDTO;
+import io.lqx.jcartstoreback.dto.out.AddressShowOutDTO;
 import io.lqx.jcartstoreback.po.Address;
 import io.lqx.jcartstoreback.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,14 @@ public class AddressController {
      * @param customerId
      * @return
      */
-    @GetMapping("/getAddressByCustomerId")
+    @GetMapping("/getCustomerAddress")
     public List<AddressListOutDTO> getAddressByCustomerId(@RequestAttribute Integer customerId){
         List<Address> addresses = addressService.getByCustomerId(customerId);
 
         List<AddressListOutDTO> addressListOutDTOS = addresses.stream().map(address -> {
             AddressListOutDTO addressListOutDTO = new AddressListOutDTO();
             addressListOutDTO.setAddressId(address.getAddressId());
-            addressListOutDTO.setContent(address.getContent());
+            addressListOutDTO.setTag(address.getTag());
             addressListOutDTO.setReceiverName(address.getReceiverName());
             addressListOutDTO.setReceiverMobile(address.getReceiverMobile());
             addressListOutDTO.setContent(address.getContent());
@@ -46,6 +47,25 @@ public class AddressController {
 
         return addressListOutDTOS;
     }
+
+    /* *
+     * 查看回显信息
+     * @param addressId
+     * @return
+     */
+    @GetMapping("/getById")
+    public AddressShowOutDTO getById(@RequestParam Integer addressId){
+        Address address = addressService.getById(addressId);
+        AddressShowOutDTO addressShowOutDTO = new AddressShowOutDTO();
+        addressShowOutDTO.setAddressId(address.getAddressId());
+        addressShowOutDTO.setTag(address.getTag());
+        addressShowOutDTO.setReceiverName(address.getReceiverName());
+        addressShowOutDTO.setReceiverMobile(address.getReceiverMobile());
+        addressShowOutDTO.setContent(address.getContent());
+
+        return addressShowOutDTO;
+    }
+
 
     /* *
      * 创建地址信息
