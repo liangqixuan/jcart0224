@@ -1,14 +1,11 @@
 package io.lqx.jcartadministrationback.controller;
 
+import com.github.pagehelper.Page;
 import io.lqx.jcartadministrationback.dto.in.OrderSearchInDTO;
-import io.lqx.jcartadministrationback.dto.out.OrderInvoiceShowOutDTO;
-import io.lqx.jcartadministrationback.dto.out.OrderShipShowOutDTO;
-import io.lqx.jcartadministrationback.dto.out.OrderShowOutDTO;
-import io.lqx.jcartadministrationback.dto.out.PageOutDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import io.lqx.jcartadministrationback.dto.out.*;
+import io.lqx.jcartadministrationback.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /* *
  * @Author: LiangQiXuan
@@ -18,7 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/order")
+@CrossOrigin
 public class OrderController {
+
+    @Autowired
+    private OrderService orderService;
 
     /* *
      * 查询订单信息
@@ -27,9 +28,15 @@ public class OrderController {
      * @return
      */
     @GetMapping("/search")
-    public PageOutDTO<OrderSearchInDTO> search(OrderSearchInDTO orderSearchInDTO,
-                                               @RequestParam Integer orderId){
-        return null;
+    public PageOutDTO<OrderListOutDTO> search(OrderSearchInDTO orderSearchInDTO,
+                                               @RequestParam(required = false, defaultValue = "1") Integer pageNum){
+        Page<OrderListOutDTO> page = orderService.search(pageNum);
+        PageOutDTO<OrderListOutDTO> pageOutDTO = new PageOutDTO<>();
+        pageOutDTO.setTotal(page.getTotal());
+        pageOutDTO.setPageSize(page.getPageSize());
+        pageOutDTO.setPageNum(page.getPageNum());
+        pageOutDTO.setList(page);
+        return pageOutDTO;
     }
 
     /* *
