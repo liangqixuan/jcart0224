@@ -3,6 +3,7 @@ package io.lqx.jcartadministrationback.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.lqx.jcartadministrationback.dao.CustomerMapper;
+import io.lqx.jcartadministrationback.dto.in.CustomerSetStatusInDTO;
 import io.lqx.jcartadministrationback.po.Customer;
 import io.lqx.jcartadministrationback.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,13 @@ public class CustomerServiceImpl implements CustomerService {
         PageHelper.startPage(pageNum, 10);
         Page<Customer> page = customerMapper.search();
         return page;
+    }
+
+    @Override
+    public void setStatus(CustomerSetStatusInDTO customerSetStatusInDTO) {
+        Customer customer = new Customer();
+        customer.setCustomerId(customerSetStatusInDTO.getCustomerId());
+        customer.setStatus(customerSetStatusInDTO.getStatus());
+        customerMapper.updateByPrimaryKeySelective(customer);
     }
 }

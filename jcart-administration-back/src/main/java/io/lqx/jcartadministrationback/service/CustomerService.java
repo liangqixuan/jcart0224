@@ -1,6 +1,7 @@
 package io.lqx.jcartadministrationback.service;
 
 import com.github.pagehelper.Page;
+import io.lqx.jcartadministrationback.dto.in.CustomerSetStatusInDTO;
 import io.lqx.jcartadministrationback.po.Customer;
 
 /* *
@@ -14,4 +15,6 @@ public interface CustomerService {
     Customer getById(Integer customerId);
 
     Page<Customer> search(Integer pageNum);
+
+    void setStatus(CustomerSetStatusInDTO customerSetStatusInDTO);
 }

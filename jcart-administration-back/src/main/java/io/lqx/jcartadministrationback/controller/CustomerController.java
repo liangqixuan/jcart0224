@@ -2,6 +2,7 @@ package io.lqx.jcartadministrationback.controller;
 
 import com.github.pagehelper.Page;
 import io.lqx.jcartadministrationback.dto.in.CustomerSearchInDTO;
+import io.lqx.jcartadministrationback.dto.in.CustomerSetStatusInDTO;
 import io.lqx.jcartadministrationback.dto.out.CustomerListOutDTO;
 import io.lqx.jcartadministrationback.dto.out.CustomerShowOutDTO;
 import io.lqx.jcartadministrationback.dto.out.PageOutDTO;
@@ -100,8 +101,8 @@ public class CustomerController {
      * @param customerId
      * @return
      */
-    @PostMapping("/disable")
-    public Integer disable(@RequestParam Integer customerId){
-        return 0;
+    @PostMapping("/setStatus")
+    public void disable(@RequestBody CustomerSetStatusInDTO customerSetStatusInDTO){
+        customerService.setStatus(customerSetStatusInDTO);
     }
 }
