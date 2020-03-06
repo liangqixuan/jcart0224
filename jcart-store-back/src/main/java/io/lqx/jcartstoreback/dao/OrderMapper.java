@@ -1,6 +1,8 @@
 package io.lqx.jcartstoreback.dao;
 
+import com.github.pagehelper.Page;
 import io.lqx.jcartstoreback.po.Order;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -16,4 +18,6 @@ public interface OrderMapper {
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
+
+    Page<Order> selectByCustomerId(@Param("customerId") Integer customerId);
 }

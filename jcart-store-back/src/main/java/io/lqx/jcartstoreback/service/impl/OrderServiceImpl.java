@@ -1,16 +1,17 @@
 package io.lqx.jcartstoreback.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import io.lqx.jcartstoreback.dao.OrderDetailMapper;
 import io.lqx.jcartstoreback.dao.OrderMapper;
 import io.lqx.jcartstoreback.dto.in.OrderCheckoutInDTO;
 import io.lqx.jcartstoreback.dto.in.OrderProductInDTO;
+import io.lqx.jcartstoreback.dto.out.OrderHistoryListOutDTO;
+import io.lqx.jcartstoreback.dto.out.OrderShowOutDTO;
 import io.lqx.jcartstoreback.dto.out.ProductShowOutDTO;
 import io.lqx.jcartstoreback.enumeration.OrderStatus;
-import io.lqx.jcartstoreback.po.Address;
-import io.lqx.jcartstoreback.po.Order;
-import io.lqx.jcartstoreback.po.OrderDetail;
-import io.lqx.jcartstoreback.po.Product;
+import io.lqx.jcartstoreback.po.*;
 import io.lqx.jcartstoreback.service.AddressService;
 import io.lqx.jcartstoreback.service.OrderHistoryService;
 import io.lqx.jcartstoreback.service.OrderService;
@@ -107,5 +108,50 @@ public class OrderServiceImpl implements OrderService {
         orderDetailMapper.insertSelective(orderDetail);
 
         return orderId;
+    }
+
+    @Override
+    public OrderShowOutDTO getById(Long orderId) {
+        Order order = orderMapper.selectByPrimaryKey(orderId);
+        OrderDetail orderDetail = orderDetailMapper.selectByPrimaryKey(orderId);
+
+        OrderShowOutDTO orderShowOutDTO = new OrderShowOutDTO();
+        orderShowOutDTO.setOrderId(orderId);
+        orderShowOutDTO.setStatus(order.getStatus());
+        orderShowOutDTO.setTotalPrice(order.getTotalPrice());
+        orderShowOutDTO.setRewordPoints(order.getRewordPoints());
+        orderShowOutDTO.setCreateTimestamp(order.getCreateTime().getTime());
+        orderShowOutDTO.setUpdateTimestamp(order.getUpdateTime().getTime());
+
+        orderShowOutDTO.setShipMethod(orderDetail.getShipMethod());
+        orderShowOutDTO.setShipAddress(orderDetail.getShipAddress());
+        orderShowOutDTO.setShipPrice(orderDetail.getShipPrice());
+        orderShowOutDTO.setPayMethod(orderDetail.getPayMethod());
+        orderShowOutDTO.setInvoiceAddress(orderDetail.getInvoiceAddress());
+        orderShowOutDTO.setInvoicePrice(orderDetail.getInvoicePrice());
+        orderShowOutDTO.setComment(orderDetail.getComment());
+
+        List<OrderProductVO> orderProductVOS = JSON.parseArray(orderDetail.getOrderProducts(), OrderProductVO.class);
+        orderShowOutDTO.setOrderProducts(orderProductVOS);
+        // 解析之后进行映射
+        List<OrderHistory> orderHistories = orderHistoryService.getByOrderId(orderId);
+        List<OrderHistoryListOutDTO> orderHistoryListOutDTOS = orderHistories.stream().map(orderHistory -> {
+            OrderHistoryListOutDTO orderHistoryListOutDTO = new OrderHistoryListOutDTO();
+            orderHistoryListOutDTO.setTimestamp(orderHistory.getTime().getTime());
+            orderHistoryListOutDTO.setOrderStatus(orderHistory.getOrderStatus());
+            orderHistoryListOutDTO.setComment(orderHistory.getComment());
+            return orderHistoryListOutDTO;
+        }).collect(Collectors.toList());
+
+        orderShowOutDTO.setOrderHistories(orderHistoryListOutDTOS);
+
+        return orderShowOutDTO;
+    }
+
+    @Override
+    public Page<Order> getByCustomerId(Integer pageNum, Integer customerId) {
+        PageHelper.startPage(pageNum, 10);
+        Page<Order> page = orderMapper.selectByCustomerId(customerId);
+        return page;
     }
 }

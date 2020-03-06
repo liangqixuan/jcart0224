@@ -1,6 +1,9 @@
 package io.lqx.jcartstoreback.service;
 
+import com.github.pagehelper.Page;
 import io.lqx.jcartstoreback.dto.in.OrderCheckoutInDTO;
+import io.lqx.jcartstoreback.dto.out.OrderShowOutDTO;
+import io.lqx.jcartstoreback.po.Order;
 
 /* *
  * @Author: LiangQiXuan
@@ -11,4 +14,8 @@ import io.lqx.jcartstoreback.dto.in.OrderCheckoutInDTO;
 public interface OrderService {
 
     Long chekout(OrderCheckoutInDTO orderCheckoutInDTO,Integer customerId);
+
+    OrderShowOutDTO getById(Long orderId);
+
+    Page<Order> getByCustomerId(Integer pageNum, Integer customerId);
 }
