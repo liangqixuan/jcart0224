@@ -2,6 +2,8 @@ package io.lqx.jcartstoreback.dto.out;
 
 import lombok.Data;
 
+import java.util.List;
+
 /* *
  * @Author: LiangQiXuan
  * @Date: 2020/2/25 17:14
@@ -11,7 +13,7 @@ import lombok.Data;
 @Data
 public class ReturnShowOutDTO {
     private Integer returnId;
-    private Integer orderId;
+    private Long orderId;
     private Long orderTimestamp;
     private String customerName;
     private String mobile;
@@ -26,4 +28,6 @@ public class ReturnShowOutDTO {
     private String comment;
     private Long createTimestamp;
     private Long updateTimestamp;
+
+    private List<ReturnHistoryListOutDTO> returnHistories;
 }
