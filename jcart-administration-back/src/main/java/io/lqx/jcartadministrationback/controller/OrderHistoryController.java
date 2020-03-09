@@ -59,7 +59,7 @@ public class OrderHistoryController {
         order.setTime(new Date());
         order.setOrderStatus(orderHistoryCreateInDTO.getOrderStatus());
         order.setComment(orderHistoryCreateInDTO.getComment());
-        order.setCustomerNotified(orderHistoryCreateInDTO.getCustomerNotfied());
+        order.setCustomerNotified(orderHistoryCreateInDTO.getCustomerNotified());
 
         Long orderId = orderHistoryService.create(order);
 

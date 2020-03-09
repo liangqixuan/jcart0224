@@ -13,5 +13,5 @@ public class OrderHistoryCreateInDTO {
     private Long orderId;
     private Byte orderStatus;
     private String comment;
-    private Boolean customerNotfied;
+    private Boolean customerNotified;
 }

@@ -13,9 +13,9 @@ public class ReturnListOutDTO {
     private Integer returnId;
     private Long orderId;
     private Integer customerId;
-    private String customerNAme;
+    private String customerName;
     private String productCode;
-    private String priductName;
+    private String productName;
     private Byte status;
     private Long createTimestamp;
     private Long updateTimestamp;
