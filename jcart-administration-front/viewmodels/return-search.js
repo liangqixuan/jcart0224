@@ -2,24 +2,18 @@ var app = new Vue({
     el: '#app',
     data: {
         pageInfo: '',
+        returnId: '',
         orderId: '',
         customerName: '',
-        totalPrice: '',
+        productCode: '',
+        productName: '',
         selectedStatus: '',
         statuses: [
             { value: 0, label: '待处理' },
-            { value: 1, label: '处理中' },
-            { value: 2, label: '待发货' },
-            { value: 3, label: '已发货' },
-            { value: 4, label: '待签收' },
-            { value: 5, label: '已签收' },
-            { value: 6, label: '待支付' },
-            { value: 7, label: '已支付' },
-            { value: 8, label: '取消' },
-            { value: 9, label: '拒绝' },
-            { value: 10, label: '完成' },
-            { value: 11, label: '待评价' },
-            { value: 12, label: '已评价' }
+            { value: 1, label: '待取货' },
+            { value: 2, label: '正在处理' },
+            { value: 3, label: '完成' },
+            { value: 4, label: '拒绝' }
         ],
         startTime: '',
         endTime: '',
@@ -27,35 +21,39 @@ var app = new Vue({
     },
     mounted() {
         console.log('view mounted');
-        this.searchOrder();
+        this.searchReturn();
     },
     methods: {
         handleSearchClick() {
             console.log('search click');
             this.pageNum = 1;
-            this.searchOrder();
+            this.searchReturn();
         },
         handleClearClick() {
             console.log('clear click');
+            this.returnId = '';
             this.orderId = '';
             this.customerName = '';
+            this.productCode = '';
+            this.productName = '';
             this.selectedStatus = '';
-            this.totalPrice = '';
             this.startTime = '';
             this.endTime = '';
         },
-        handlePageChange() {
+        handlePageChange(val) {
             console.log('page changed', val);
             this.pageNum = val;
-            this.searchOrder();
+            this.searchReturn();
         },
-        searchOrder() {
-            axios.get('/order/search', {
+        searchReturn() {
+            axios.get('/return/search', {
                 params: {
+                    returnId: this.returnId,
                     orderId: this.orderId,
                     customerName: this.customerName,
+                    productCode: this.productCode,
+                    productName: this.productName,
                     status: this.selectedStatus,
-                    totalPrice: this.totalPrice,
                     startTimestamp: this.startTime ? this.startTime.getTime() : '',
                     endTimestamp: this.endTime ? this.endTime.getTime() : '',
                     pageNum: this.pageNum
