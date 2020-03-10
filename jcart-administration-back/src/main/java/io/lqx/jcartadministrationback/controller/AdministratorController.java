@@ -11,10 +11,17 @@ import io.lqx.jcartadministrationback.po.Administrator;
 import io.lqx.jcartadministrationback.service.AdministratorService;
 import io.lqx.jcartadministrationback.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.DatatypeConverter;
+import java.security.SecureRandom;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /* *
@@ -33,6 +40,18 @@ public class AdministratorController {
 
     @Autowired
     private JWTUtil jwtUtil;
+
+    @Autowired
+    private SecureRandom secureRandom;
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Value("${spring.mail.username}")
+    private String fromEmail;
+
+    //发送邮件成功 维护信息
+    private Map<String, String> emailPwdResetCodeMap = new HashMap<>();
 
     /* *
      * 用户登录，jwt json web
@@ -106,8 +125,18 @@ public class AdministratorController {
      * @return
      */
     @GetMapping("/getPwdRestCode")
-    public String getPwdRestCode(@RequestParam String email){
-        return null;
+    public void getPwdRestCode(@RequestParam String email){
+        byte[] bytes = secureRandom.generateSeed(3);
+        String s = DatatypeConverter.printHexBinary(bytes);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(fromEmail);
+        message.setTo(email);
+        message.setSubject("jcart管理端管理员密码重置");
+        message.setText(s);
+        mailSender.send(message);
+
+        emailPwdResetCodeMap.put(email,s);
+
     }
 
     /* *
