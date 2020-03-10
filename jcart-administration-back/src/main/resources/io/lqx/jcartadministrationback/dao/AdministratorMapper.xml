@@ -33,7 +33,7 @@
       #{email,jdbcType=VARCHAR}, #{encryptedPassword,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
       #{createTime,jdbcType=TIMESTAMP}, #{avatarUrl,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="io.lqx.jcartadministrationback.po.Administrator">
+  <insert id="insertSelective" parameterType="io.lqx.jcartadministrationback.po.Administrator" useGeneratedKeys="true" keyProperty="administratorId">
     insert into jcart_administrator
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="administratorId != null">
@@ -149,5 +149,12 @@
     select
     <include refid="Base_Column_List" />
     from jcart_administrator
+  </select>
+
+  <select id="selectByEmail" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from jcart_administrator
+    where email = #{email}
   </select>
 </mapper>
