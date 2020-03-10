@@ -1,6 +1,7 @@
 package io.lqx.jcartstoreback.service.impl;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import io.lqx.jcartstoreback.dao.ReturnMapper;
 import io.lqx.jcartstoreback.po.Return;
 import io.lqx.jcartstoreback.service.ReturnService;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
  * 吃符号亏，上大小写的当，最后死在需求上。
  */
 @Service
-
 public class ReturnServiceImpl implements ReturnService {
 
     @Autowired
@@ -22,16 +22,21 @@ public class ReturnServiceImpl implements ReturnService {
 
     @Override
     public Integer create(Return aReturn) {
-        return null;
+        returnMapper.insertSelective(aReturn);
+        Integer returnId = aReturn.getReturnId();
+        return returnId;
     }
 
     @Override
     public Page<Return> getPageByCustomerId(Integer customerId, Integer pageNum) {
-        return null;
+        PageHelper.startPage(pageNum, 10);
+        Page<Return> page = returnMapper.selectPageByCustomerId(customerId);
+        return page;
     }
 
     @Override
     public Return getById(Integer returnId) {
-        return null;
+        Return aReturn = returnMapper.selectByPrimaryKey(returnId);
+        return aReturn;
     }
 }
