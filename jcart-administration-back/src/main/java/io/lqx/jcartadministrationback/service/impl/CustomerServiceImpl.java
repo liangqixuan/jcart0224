@@ -3,6 +3,7 @@ package io.lqx.jcartadministrationback.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.lqx.jcartadministrationback.dao.CustomerMapper;
+import io.lqx.jcartadministrationback.dto.in.CustomerSearchInDTO;
 import io.lqx.jcartadministrationback.dto.in.CustomerSetStatusInDTO;
 import io.lqx.jcartadministrationback.po.Customer;
 import io.lqx.jcartadministrationback.service.CustomerService;
@@ -28,9 +29,14 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Page<Customer> search(Integer pageNum) {
+    public Page<Customer> search(CustomerSearchInDTO customerSearchInDTO,Integer pageNum) {
         PageHelper.startPage(pageNum, 10);
-        Page<Customer> page = customerMapper.search();
+        Page<Customer> page = customerMapper.search(
+                customerSearchInDTO.getUsername(),
+                customerSearchInDTO.getRealName(),
+                customerSearchInDTO.getMoblie(),
+                customerSearchInDTO.getEmail(),
+                customerSearchInDTO.getStatus());
         return page;
     }
 

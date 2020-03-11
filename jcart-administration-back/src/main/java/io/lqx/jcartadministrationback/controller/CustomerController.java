@@ -40,7 +40,7 @@ public class CustomerController {
     @GetMapping("/search")
     public PageOutDTO<CustomerListOutDTO>search(CustomerSearchInDTO customerSearchInDTO,
                                                 @RequestParam(required = false, defaultValue = "1") Integer pageNum){
-        Page<Customer> page = customerService.search(pageNum);
+        Page<Customer> page = customerService.search(customerSearchInDTO,pageNum);
         // 客户信息映射
         List<CustomerListOutDTO> customerListOutDTOS = page.stream().map(customer -> {
             CustomerListOutDTO customerListOutDTO = new CustomerListOutDTO();
