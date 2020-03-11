@@ -2,6 +2,7 @@ package io.lqx.jcartadministrationback.service;
 
 import com.github.pagehelper.Page;
 import io.lqx.jcartadministrationback.dto.in.ProductCreateInDTO;
+import io.lqx.jcartadministrationback.dto.in.ProductSearchInDTO;
 import io.lqx.jcartadministrationback.dto.in.ProductUpdateInDTO;
 import io.lqx.jcartadministrationback.dto.out.ProductListOutDTO;
 import io.lqx.jcartadministrationback.dto.out.ProductShowOutDTO;
@@ -24,7 +25,8 @@ public interface ProductService {
 
     void batchDelete(List<Integer> productIds);
 
-    Page<ProductListOutDTO> search(Integer pageNum);
+    Page<ProductListOutDTO> search(ProductSearchInDTO productSearchInDTO,
+                                   Integer pageNum);
 
     ProductShowOutDTO getById(Integer productId);
 
