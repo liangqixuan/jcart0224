@@ -11,7 +11,9 @@ import lombok.Data;
 @Data
 public class OrderSearchInDTO {
     private Long orderId;
-    private String customerNAme;
+    private String customerName;
     private Byte status;
     private Double totalPrice;
+    private Long startTimestamp;
+    private Long endTimestamp;
 }

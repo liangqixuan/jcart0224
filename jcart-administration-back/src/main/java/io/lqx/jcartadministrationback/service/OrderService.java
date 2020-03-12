@@ -1,8 +1,10 @@
 package io.lqx.jcartadministrationback.service;
 
 import com.github.pagehelper.Page;
+import io.lqx.jcartadministrationback.dto.in.OrderSearchInDTO;
 import io.lqx.jcartadministrationback.dto.out.OrderListOutDTO;
 import io.lqx.jcartadministrationback.dto.out.OrderShowOutDTO;
+import io.lqx.jcartadministrationback.po.Order;
 
 /* *
  * @Author: LiangQiXuan
@@ -12,7 +14,10 @@ import io.lqx.jcartadministrationback.dto.out.OrderShowOutDTO;
  */
 public interface OrderService {
 
-    Page<OrderListOutDTO> search(Integer pageNum);
+    Page<OrderListOutDTO> search(OrderSearchInDTO orderSearchInDTO, Integer pageNum);
 
     OrderShowOutDTO getById(Long orderId);
+
+    void update(Order order);
+
 }

@@ -5,6 +5,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.lqx.jcartadministrationback.dao.OrderDetailMapper;
 import io.lqx.jcartadministrationback.dao.OrderMapper;
+import io.lqx.jcartadministrationback.dto.in.OrderSearchInDTO;
 import io.lqx.jcartadministrationback.dto.out.OrderListOutDTO;
 import io.lqx.jcartadministrationback.dto.out.OrderShowOutDTO;
 import io.lqx.jcartadministrationback.po.Customer;
@@ -16,6 +17,7 @@ import io.lqx.jcartadministrationback.vo.OrderProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /* *
@@ -37,9 +39,15 @@ public class OrderServiceImpl implements OrderService {
     private CustomerService customerService;
 
     @Override
-    public Page<OrderListOutDTO> search(Integer pageNum) {
+    public Page<OrderListOutDTO> search(OrderSearchInDTO orderSearchInDTO, Integer pageNum) {
         PageHelper.startPage(pageNum, 10);
-        Page<OrderListOutDTO> page = orderMapper.search();
+        Page<OrderListOutDTO> page = orderMapper.search(
+                orderSearchInDTO.getOrderId(),
+                orderSearchInDTO.getStatus(),
+                orderSearchInDTO.getTotalPrice(),
+                orderSearchInDTO.getCustomerName(),
+                orderSearchInDTO.getStartTimestamp() == null ? null : new Date(orderSearchInDTO.getStartTimestamp()),
+                orderSearchInDTO.getEndTimestamp() == null ? null : new Date(orderSearchInDTO.getEndTimestamp()));
         return page;
     }
 
@@ -70,5 +78,10 @@ public class OrderServiceImpl implements OrderService {
         List<OrderProductVO> orderProductVOS = JSON.parseArray(orderDetail.getOrderProducts(), OrderProductVO.class);
         orderShowOutDTO.setOrderProducts(orderProductVOS);
         return orderShowOutDTO;
+    }
+
+    @Override
+    public void update(Order order) {
+        orderMapper.updateByPrimaryKeySelective(order);
     }
 }

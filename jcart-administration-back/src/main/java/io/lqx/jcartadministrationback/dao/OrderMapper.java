@@ -3,7 +3,10 @@ package io.lqx.jcartadministrationback.dao;
 import com.github.pagehelper.Page;
 import io.lqx.jcartadministrationback.dto.out.OrderListOutDTO;
 import io.lqx.jcartadministrationback.po.Order;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.Date;
 
 @Repository
 public interface OrderMapper {
@@ -19,5 +22,10 @@ public interface OrderMapper {
 
     int updateByPrimaryKey(Order record);
 
-    Page<OrderListOutDTO> search();
+    Page<OrderListOutDTO> search(@Param("orderId") Long orderId,
+                                 @Param("status") Byte status,
+                                 @Param("totalPrice") Double totalPrice,
+                                 @Param("customerName") String customerName,
+                                 @Param("startTime") Date startTime,
+                                 @Param("endTime") Date endTime);
 }
