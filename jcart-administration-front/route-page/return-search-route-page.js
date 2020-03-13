@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="assets/css/elementui.css">
-    <title>return-search</title>
-</head>
-
-<body>
+const ReturnSearchRoutePage = {
+    template: `
     <div id="app">
 
         <el-input v-model="returnId" placeholder="请输入退货Id"></el-input>
@@ -67,13 +57,75 @@
         <el-pagination layout="prev, pager, next" :total="pageInfo.total" @current-change="handlePageChange">
         </el-pagination>
     </div>
-
-    <script src="assets/js/axios.min.js"></script>
-    <script src="assets/js/common.js"></script>
-    <script src="assets/js/vue.js"></script>
-    <script src="assets/js/elementui.js"></script>
-    <script src="viewmodels/return-search.js"></script>
-
-</body>
-
-</html>
+    `,
+    data() {
+        return {
+            pageInfo: '',
+            returnId: '',
+            orderId: '',
+            customerName: '',
+            productCode: '',
+            productName: '',
+            selectedStatus: '',
+            statuses: [
+                { value: 0, label: '待处理' },
+                { value: 1, label: '待取货' },
+                { value: 2, label: '正在处理' },
+                { value: 3, label: '完成' },
+                { value: 4, label: '拒绝' }
+            ],
+            startTime: '',
+            endTime: '',
+            pageNum: 1
+        }
+    },
+    mounted() {
+        console.log('view mounted');
+        this.searchReturn();
+    },
+    methods: {
+        handleSearchClick() {
+            console.log('search click');
+            this.pageNum = 1;
+            this.searchReturn();
+        },
+        handleClearClick() {
+            console.log('clear click');
+            this.returnId = '';
+            this.orderId = '';
+            this.customerName = '';
+            this.productCode = '';
+            this.productName = '';
+            this.selectedStatus = '';
+            this.startTime = '';
+            this.endTime = '';
+        },
+        handlePageChange(val) {
+            console.log('page changed', val);
+            this.pageNum = val;
+            this.searchReturn();
+        },
+        searchReturn() {
+            axios.get('/return/search', {
+                params: {
+                    returnId: this.returnId,
+                    orderId: this.orderId,
+                    customerName: this.customerName,
+                    productCode: this.productCode,
+                    productName: this.productName,
+                    status: this.selectedStatus,
+                    startTimestamp: this.startTime ? this.startTime.getTime() : '',
+                    endTimestamp: this.endTime ? this.endTime.getTime() : '',
+                    pageNum: this.pageNum
+                }
+            })
+                .then((response) => {
+                    console.log(response);
+                    this.pageInfo = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    }
+}

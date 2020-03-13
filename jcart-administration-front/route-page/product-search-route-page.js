@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="assets/css/elementui.css">
-    <title>product-search</title>
-</head>
-
-<body>
+const ProductSearchRoutePage = {
+    template: `
     <div id="app">
         <el-input v-model="productCode" placeholder="请输入商品代号"></el-input>
         <el-input v-model="productName" placeholder="请输入商品名称"></el-input>
@@ -52,6 +42,7 @@
             </el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="scope">
+                    <router-link :to="'/product/update/'+scope.row.productId">编辑</router-link>
                     <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                 </template>
             </el-table-column>
@@ -60,13 +51,69 @@
         <el-pagination layout="prev, pager, next" :total="pageInfo.total" @current-change="handlePageChange">
         </el-pagination>
     </div>
-
-    <script src="assets/js/axios.min.js"></script>
-    <script src="assets/js/common.js"></script>
-    <script src="assets/js/vue.js"></script>
-    <script src="assets/js/elementui.js"></script>
-    <script src="viewmodels/product-search.js"></script>
-
-</body>
-
-</html>
+    `,
+    data() {
+        return {
+            pageInfo: '',
+            pageNum: 1,
+            productCode: '',
+            productName: '',
+            price: '',
+            stockQuantity: '',
+            selectedStatus: '',
+            statuses: [
+                { value: 0, label: '下架' },
+                { value: 1, label: '上架' },
+                { value: 2, label: '待审核' }
+            ]
+        }
+    },
+    mounted() {
+        console.log('view mounted');
+        this.searchProduct();
+    },
+    methods: {
+        handleSearchClick() {
+            console.log('search click');
+            this.pageNum = 1;
+            this.searchProduct();
+        },
+        handleEdit(index, row) {
+            console.log('product edit click', index, row);
+            app.jcProductId = row.productId;
+            app.selectMainPage = '1-6';
+        },
+        handleClearClick() {
+            console.log('clear click');
+            this.productCode = '';
+            this.productName = '';
+            this.price = '';
+            this.stockQuantity = '';
+            this.selectedStatus = '';
+        },
+        handlePageChange(val) {
+            console.log('page change');
+            this.pageNum = val;
+            this.searchProduct();
+        },
+        searchProduct() {
+            axios.get('/product/search', {
+                params: {
+                    productCode: this.productCode,
+                    productName: this.productName,
+                    price: this.price,
+                    stockQuantity: this.stockQuantity,
+                    status: this.selectedStatus,
+                    pageNum: this.pageNum
+                }
+            })
+                .then((response) => {
+                    console.log(response);
+                    this.pageInfo = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    }
+}
