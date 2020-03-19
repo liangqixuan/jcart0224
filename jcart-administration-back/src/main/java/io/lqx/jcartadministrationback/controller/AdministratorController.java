@@ -124,7 +124,7 @@ public class AdministratorController {
      * @param email
      * @return
      */
-    @GetMapping("/getPwdRestCode")
+    @GetMapping("/getPwdResetCode")
     public void getPwdRestCode(@RequestParam String email) throws ClientException {
         Administrator administrator = administratorService.getByEmail(email);
         if (administrator == null){
@@ -146,7 +146,7 @@ public class AdministratorController {
     /* *
      * 重置密码
      */
-    @PostMapping("/restPws")
+    @PostMapping("/resetPws")
     public void restPws(@RequestBody AdministratorRestPwdInDTO administratorRestPwdInDTO) throws ClientException {
         String email = administratorRestPwdInDTO.getEmail();
         if (email == null) {
