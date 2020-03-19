@@ -2,12 +2,25 @@ var app = new Vue({
     el: '#app',
     data: {
         email: '',
-        loading: false
+        loading: false,
+        buttonEnabled: true,
+        counter: 60
     },
     methods: {
         handleFindBackPwdClick() {
             console.log('find back pwd click');
             this.loading = true;
+            this.buttonEnabled = false;
+            this.counter = 60;
+
+            setInterval(function () {
+                console.log("count down");
+                app.counter--;
+                if(app.counter < 0){
+                    app.buttonEnabled = true;
+                }
+            }, 1000);
+
             this.getPwdResetCode();
         },
         getPwdResetCode() {
