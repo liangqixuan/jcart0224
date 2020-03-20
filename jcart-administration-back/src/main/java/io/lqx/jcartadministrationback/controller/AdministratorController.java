@@ -7,10 +7,12 @@ import io.lqx.jcartadministrationback.dto.in.*;
 import io.lqx.jcartadministrationback.dto.out.*;
 import io.lqx.jcartadministrationback.enumeration.AdministratorStatus;
 import io.lqx.jcartadministrationback.exception.ClientException;
+import io.lqx.jcartadministrationback.mq.EmailEvent;
 import io.lqx.jcartadministrationback.po.Administrator;
 import io.lqx.jcartadministrationback.service.AdministratorService;
 import io.lqx.jcartadministrationback.util.EmailUtil;
 import io.lqx.jcartadministrationback.util.JWTUtil;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -53,6 +55,9 @@ public class AdministratorController {
 
     //发送邮件成功 维护信息
     private Map<String, String> emailPwdResetCodeMap = new HashMap<>();
+
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
 
     /* *
      * 用户登录，jwt json web
@@ -135,7 +140,12 @@ public class AdministratorController {
         String s = DatatypeConverter.printHexBinary(bytes);
 
         // 发送邮件
-        emailUtil.send(fromEmail,email,"jcart管理端管理员密码重置",s);
+        //emailUtil.send(fromEmail,email,"jcart管理端管理员密码重置",s);
+        EmailEvent event = new EmailEvent();
+        event.setToEmail(email);
+        event.setTitle("jcart管理端管理员密码重置");
+        event.setContent(s);
+        rocketMQTemplate.convertAndSend("EmailConsumer", event);
 
         emailPwdResetCodeMap.put(email,s);
 
