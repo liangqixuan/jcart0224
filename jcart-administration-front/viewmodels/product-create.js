@@ -90,7 +90,7 @@ var app = new Vue({
                     })
                     .catch(function (error) {
                         console.log(error);
-                        alert('上床失败');
+                        alert('上传失败');
                     });
             });
 
