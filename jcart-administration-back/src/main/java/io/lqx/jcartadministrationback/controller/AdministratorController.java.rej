@@ -1,0 +1,14 @@
+diff a/jcart-administration-back/src/main/java/io/lqx/jcartadministrationback/controller/AdministratorController.java b/jcart-administration-back/src/main/java/io/lqx/jcartadministrationback/controller/AdministratorController.java	(rejected hunks)
+@@ -7,10 +7,12 @@
+ import io.lqx.jcartadministrationback.dto.out.*;
+ import io.lqx.jcartadministrationback.enumeration.AdministratorStatus;
+ import io.lqx.jcartadministrationback.exception.ClientException;
++import io.lqx.jcartadministrationback.mq.EmailEvent;
+ import io.lqx.jcartadministrationback.po.Administrator;
+ import io.lqx.jcartadministrationback.service.AdministratorService;
+ import io.lqx.jcartadministrationback.util.EmailUtil;
+ import io.lqx.jcartadministrationback.util.JWTUtil;
++import org.apache.rocketmq.spring.core.RocketMQTemplate;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.beans.factory.annotation.Value;
+ import org.springframework.mail.SimpleMailMessage;

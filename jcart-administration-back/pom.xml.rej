@@ -1,0 +1,15 @@
+diff a/jcart-administration-back/pom.xml b/jcart-administration-back/pom.xml	(rejected hunks)
+@@ -88,6 +88,13 @@
+             <artifactId>spring-boot-starter-mail</artifactId>
+         </dependency>
+ 
++        <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-spring-boot-starter -->
++        <dependency>
++            <groupId>org.apache.rocketmq</groupId>
++            <artifactId>rocketmq-spring-boot-starter</artifactId>
++            <version>2.1.0</version>
++        </dependency>
++
+ 
+     </dependencies>
+ 
