@@ -5,9 +5,12 @@ import io.lqx.jcartstoreback.dto.in.ProductSearchInDTO;
 import io.lqx.jcartstoreback.dto.out.PageOutDTO;
 import io.lqx.jcartstoreback.dto.out.ProductListOutDTO;
 import io.lqx.jcartstoreback.dto.out.ProductShowOutDTO;
+import io.lqx.jcartstoreback.service.ProductOperationService;
 import io.lqx.jcartstoreback.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /* *
  * @Author: LiangQiXuan
@@ -22,6 +25,9 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private ProductOperationService productOperationService;
 
     /* *
      * 查询列表数据
@@ -49,7 +55,18 @@ public class ProductController {
     @GetMapping("/getById")
     public ProductShowOutDTO getById(@RequestParam Integer productId){
         ProductShowOutDTO productShowOutDTO = productService.getShowById(productId);
+        //todo send msg to kafka
+        productOperationService.count(productId);
         return productShowOutDTO;
+    }
+
+    /* *
+     * 热门数据
+     * @return
+     */
+    @GetMapping("/hot")
+    public List<ProductListOutDTO> hot(){
+        return null;
     }
 
 }
