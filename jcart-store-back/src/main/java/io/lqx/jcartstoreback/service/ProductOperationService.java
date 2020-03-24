@@ -1,5 +1,9 @@
 package io.lqx.jcartstoreback.service;
 
+import io.lqx.jcartstoreback.po.ProductOperation;
+
+import java.util.List;
+
 /* *
  * @Author: LiangQiXuan
  * @Date: 2020/3/22 11:00
@@ -9,4 +13,6 @@ package io.lqx.jcartstoreback.service;
 public interface ProductOperationService {
 
     void count(Integer productId);
+
+    List<ProductOperation> selectHotProduct();
 }

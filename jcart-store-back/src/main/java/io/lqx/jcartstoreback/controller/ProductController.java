@@ -7,9 +7,12 @@ import io.lqx.jcartstoreback.dto.out.PageOutDTO;
 import io.lqx.jcartstoreback.dto.out.ProductListOutDTO;
 import io.lqx.jcartstoreback.dto.out.ProductShowOutDTO;
 import io.lqx.jcartstoreback.mq.HotProductDTO;
+import io.lqx.jcartstoreback.po.ProductOperation;
 import io.lqx.jcartstoreback.service.ProductOperationService;
 import io.lqx.jcartstoreback.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +37,9 @@ public class ProductController {
 
     @Autowired
     private KafkaTemplate kafkaTemplate;
+
+    @Autowired
+    private RedisTemplate<String,String> redisTemplate;
 
     /* *
      * 查询列表数据
@@ -72,12 +78,21 @@ public class ProductController {
     }
 
     /* *
-     * 热门数据
+     * 热门商品
      * @return
      */
     @GetMapping("/hot")
-    public List<ProductListOutDTO> hot(){
-        return null;
+    //@Cacheable(cacheNames = "HotProducts")//作用是当天的热门商品缓存到redis后续不需要再去访问数据库
+    public List<ProductOperation> hot(){
+        String hotProductJson = redisTemplate.opsForValue().get("HotProducts");
+        if(hotProductJson != null){
+            List<ProductOperation> productOperations = JSON.parseArray(hotProductJson, ProductOperation.class);
+            return productOperations;
+        }else {
+            List<ProductOperation> hotProducts = productOperationService.selectHotProduct();
+            redisTemplate.opsForValue().set("HotProducts",JSON.toJSONString(hotProducts));
+            return hotProducts;
+        }
     }
 
 }

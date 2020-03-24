@@ -5,6 +5,8 @@ import io.lqx.jcartstoreback.dto.out.ProductListOutDTO;
 import io.lqx.jcartstoreback.po.Product;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProductMapper {
     int deleteByPrimaryKey(Integer productId);
@@ -20,4 +22,6 @@ public interface ProductMapper {
     int updateByPrimaryKey(Product record);
 
     Page<ProductListOutDTO> search();
+
+
 }
