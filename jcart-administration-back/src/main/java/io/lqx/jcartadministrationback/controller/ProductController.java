@@ -7,6 +7,7 @@ import io.lqx.jcartadministrationback.dto.in.ProductUpdateInDTO;
 import io.lqx.jcartadministrationback.dto.out.PageOutDTO;
 import io.lqx.jcartadministrationback.dto.out.ProductListOutDTO;
 import io.lqx.jcartadministrationback.dto.out.ProductShowOutDTO;
+import io.lqx.jcartadministrationback.es.repo.ProductRepo;
 import io.lqx.jcartadministrationback.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

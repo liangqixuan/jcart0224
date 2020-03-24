@@ -10,6 +10,8 @@ import io.lqx.jcartadministrationback.dto.in.ProductSearchInDTO;
 import io.lqx.jcartadministrationback.dto.in.ProductUpdateInDTO;
 import io.lqx.jcartadministrationback.dto.out.ProductListOutDTO;
 import io.lqx.jcartadministrationback.dto.out.ProductShowOutDTO;
+import io.lqx.jcartadministrationback.es.doc.ProductDoc;
+import io.lqx.jcartadministrationback.es.repo.ProductRepo;
 import io.lqx.jcartadministrationback.po.Product;
 import io.lqx.jcartadministrationback.po.ProductDetail;
 import io.lqx.jcartadministrationback.service.ProductService;
@@ -34,6 +36,9 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductDetailMapper productDetailMapper;
 
+    @Autowired
+    private ProductRepo productRepo;// 继承esRepository
+    
     @Override
     @Transactional
     public Integer create(ProductCreateInDTO productCreateInDTO) {
@@ -66,6 +71,14 @@ public class ProductServiceImpl implements ProductService {
 
         // 添加商品附表数据
         productDetailMapper.insertSelective(productDetail);
+
+        ProductDoc pdc = new ProductDoc();
+        pdc.setProductId(productId);
+        pdc.setProductName(productCreateInDTO.getProductName());
+        pdc.setProductCode(productCreateInDTO.getProductCode());
+        pdc.setProductAbstract(productCreateInDTO.getProductAbstract());
+        ProductDoc save = productRepo.save(pdc);
+
         return productId;
     }
 

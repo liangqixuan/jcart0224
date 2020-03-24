@@ -6,6 +6,8 @@ import io.lqx.jcartstoreback.dto.in.ProductSearchInDTO;
 import io.lqx.jcartstoreback.dto.out.PageOutDTO;
 import io.lqx.jcartstoreback.dto.out.ProductListOutDTO;
 import io.lqx.jcartstoreback.dto.out.ProductShowOutDTO;
+import io.lqx.jcartstoreback.es.doc.ProductDoc;
+import io.lqx.jcartstoreback.es.repo.ProductRepo;
 import io.lqx.jcartstoreback.mq.HotProductDTO;
 import io.lqx.jcartstoreback.po.ProductOperation;
 import io.lqx.jcartstoreback.service.ProductOperationService;
@@ -41,6 +43,9 @@ public class ProductController {
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
+    @Autowired
+    private ProductRepo productRepo;
+
     /* *
      * 查询列表数据
      * @param productSearchInDTO
@@ -50,6 +55,9 @@ public class ProductController {
     @GetMapping("/search")
     public PageOutDTO<ProductListOutDTO> search(ProductSearchInDTO productSearchInDTO,
                                                 @RequestParam(required = false, defaultValue = "1") Integer pageNum){
+        String keyword = productSearchInDTO.getKeyword();
+        List<ProductDoc> productDocs = productRepo.findByProductNameLikeOrProductAbstractLike(keyword, keyword);
+
         Page<ProductListOutDTO> page = productService.search(productSearchInDTO,pageNum);
         PageOutDTO<ProductListOutDTO> pageOutDTO = new PageOutDTO<>();
         pageOutDTO.setTotal(page.getTotal());
