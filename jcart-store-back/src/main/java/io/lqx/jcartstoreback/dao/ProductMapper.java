@@ -3,6 +3,7 @@ package io.lqx.jcartstoreback.dao;
 import com.github.pagehelper.Page;
 import io.lqx.jcartstoreback.dto.out.ProductListOutDTO;
 import io.lqx.jcartstoreback.po.Product;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,7 +22,8 @@ public interface ProductMapper {
 
     int updateByPrimaryKey(Product record);
 
-    Page<ProductListOutDTO> search();
+    Page<ProductListOutDTO> search(@Param("keyword") String keyword,
+                                   @Param("status") Byte status);
 
 
 }
