@@ -1,13 +1,16 @@
 package io.lqx.jcartstoreback.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import io.lqx.jcartstoreback.dto.in.ProductSearchInDTO;
 import io.lqx.jcartstoreback.dto.out.PageOutDTO;
 import io.lqx.jcartstoreback.dto.out.ProductListOutDTO;
 import io.lqx.jcartstoreback.dto.out.ProductShowOutDTO;
+import io.lqx.jcartstoreback.mq.HotProductDTO;
 import io.lqx.jcartstoreback.service.ProductOperationService;
 import io.lqx.jcartstoreback.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +31,9 @@ public class ProductController {
 
     @Autowired
     private ProductOperationService productOperationService;
+
+    @Autowired
+    private KafkaTemplate kafkaTemplate;
 
     /* *
      * 查询列表数据
@@ -56,7 +62,12 @@ public class ProductController {
     public ProductShowOutDTO getById(@RequestParam Integer productId){
         ProductShowOutDTO productShowOutDTO = productService.getShowById(productId);
         //todo send msg to kafka
-        productOperationService.count(productId);
+        HotProductDTO hot = new HotProductDTO();
+        hot.setProductId(productId);
+        hot.setProductCode(productShowOutDTO.getProductCode());
+
+        kafkaTemplate.send("test", JSON.toJSONString(hot));
+        //productOperationService.count(productId);
         return productShowOutDTO;
     }
 

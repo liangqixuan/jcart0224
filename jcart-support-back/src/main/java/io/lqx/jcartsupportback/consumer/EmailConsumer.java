@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  * 吃符号亏，上大小写的当，最后死在需求上。
  */
 @Component
-@RocketMQMessageListener(topic = "EmailConsumer",consumerGroup = "my-group1")
+//@RocketMQMessageListener(topic = "EmailConsumer",consumerGroup = "my-group1")
 public class EmailConsumer implements RocketMQListener<EmailEvent> {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
